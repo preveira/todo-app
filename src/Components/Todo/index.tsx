@@ -1,4 +1,3 @@
-// Components/Todo/index.tsx
 import React, { useState } from 'react';
 import { useSettings } from '../../Context/Settings';
 
@@ -11,20 +10,18 @@ interface TodoItem {
 }
 
 const Todo: React.FC = () => {
-  const { displayCount, hideCompleted } = useSettings();
+  const { displayCount } = useSettings();
   const [todoText, setTodoText] = useState('');
   const [assignee, setAssignee] = useState('');
   const [difficulty, setDifficulty] = useState(4);
   const [todoList, setTodoList] = useState<TodoItem[]>([]);
+  const [showCompleted, setShowCompleted] = useState(true);
 
   const handleAddTodo = () => {
-    // Check if the todoText is empty before adding the todo item
     if (todoText.trim() === '') {
       console.log('Todo text cannot be empty');
       return;
     }
-
-    // Create a new todo item
     const newTodo: TodoItem = {
       id: Date.now().toString(),
       text: todoText,
@@ -32,18 +29,13 @@ const Todo: React.FC = () => {
       difficulty,
       completed: false,
     };
-
-    // Add the new todo item to the todo list
     setTodoList([...todoList, newTodo]);
-
-    // Clear input fields after adding todo item
     setTodoText('');
     setAssignee('');
-    setDifficulty(4); // Reset difficulty to default
+    setDifficulty(4);
   };
 
   const handleToggleCompleted = (id: string) => {
-    // Toggle the completed status of the todo item with the given id
     const updatedTodoList = todoList.map(todo => {
       if (todo.id === id) {
         return {
@@ -53,7 +45,6 @@ const Todo: React.FC = () => {
       }
       return todo;
     });
-
     setTodoList(updatedTodoList);
   };
 
@@ -90,15 +81,14 @@ const Todo: React.FC = () => {
         {difficulty}
       </label>
       <button onClick={handleAddTodo}>Add Todo</button>
-      <button onClick={() => setShowCompleted(!hideCompleted)}>
-        {hideCompleted ? 'Hide Completed' : 'Show Completed'}
+      <button onClick={() => setShowCompleted(!showCompleted)}>
+        {showCompleted ? 'Hide Completed' : 'Show Completed'}
       </button>
 
-      {/* Render the todo items */}
       <ul>
         {todoList
-          .filter(todo => !todo.completed || !hideCompleted) // Filter based on completion status and hideCompleted setting
-          .slice(0, displayCount) // Limit display to displayCount
+          .filter(todo => !todo.completed || showCompleted)
+          .slice(0, displayCount)
           .map(todo => (
             <li key={todo.id}>
               <input
@@ -106,8 +96,11 @@ const Todo: React.FC = () => {
                 checked={todo.completed}
                 onChange={() => handleToggleCompleted(todo.id)}
               />
-              <span style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
-                {todo.text} - {todo.assignee} - {todo.difficulty}
+              <span>
+                To Do Item: {todo.text} - 
+                Assignee: {todo.assignee} - 
+                Difficulty: {todo.difficulty} - 
+                Completed: {todo.completed ? 'Yes' : 'No'}
               </span>
             </li>
           ))}
