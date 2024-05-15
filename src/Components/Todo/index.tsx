@@ -97,7 +97,7 @@ const Todo: React.FC = () => {
                 onChange={() => handleToggleCompleted(todo.id)}
               />
               <span>
-                To Do Item: {todo.text} - 
+                To Do Item: {todo.text} -
                 Assignee: {todo.assignee} - 
                 Difficulty: {todo.difficulty} - 
                 Completed: {todo.completed ? 'Yes' : 'No'}

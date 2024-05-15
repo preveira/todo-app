@@ -1,10 +1,12 @@
-// Context/Settings/index.tsx
 import React, { createContext, useContext, useState } from 'react';
 
 interface SettingsContextType {
   displayCount: number;
   hideCompleted: boolean;
   sortBy: string;
+}
+interface childrenType {
+  children: React.ReactElement;
 }
 
 const defaultSettings: SettingsContextType = {
@@ -17,7 +19,7 @@ const SettingsContext = createContext<SettingsContextType>(defaultSettings);
 
 export const useSettings = () => useContext(SettingsContext);
 
-export const SettingsProvider: React.FC = ({ children }) => {
+export const SettingsProvider: React.FunctionComponent = ({ children }: childrenType) => {
   const [settings, setSettings] = useState<SettingsContextType>(defaultSettings);
 
   return (
