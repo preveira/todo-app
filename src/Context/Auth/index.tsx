@@ -27,8 +27,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<User | null>(defaultUser);
 
   const login = (username: string, password: string) => {
-    // Simulate authentication logic
-    // Replace this with actual authentication logic
+
     if (username === 'admin' && password === 'password') {
       setUser({ username, role: 'admin' });
     } else if (username === 'user' && password === 'password') {
@@ -41,7 +40,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   };
 
   const authorize = (capability: string) => {
-    return user !== null && user.role === 'admin'; // Assuming only admin can perform all actions
+    return user !== null && user.role === 'admin';
   };
 
   return (
