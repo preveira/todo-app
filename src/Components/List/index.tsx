@@ -1,10 +1,10 @@
 import React from 'react';
-import Todo from '../Todo';
+import TodoList from '../Todo';
 
 const List: React.FC = () => {
   return (
     <div>   
-      <Todo />
+      <TodoList />
     </div>
   );
 };
